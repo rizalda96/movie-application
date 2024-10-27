@@ -16,6 +16,19 @@ mix.js('resources/js/app.js', 'public/js')
   .sass('resources/sass/app.scss', 'public/css');
 
 
+if (mix.inProduction()) {
+  mix.options({
+    terser: {
+      terserOptions: {
+        compress: {
+          drop_console: true,
+        }
+      }
+    }
+  })
+    .version()
+}
+
 mix.webpackConfig({
   resolve: {
     extensions: [".js", ".vue", ".json"],

@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Container from '@components/Container'
+import Container from '@components/Container.vue'
+import MovieList from '@pages/movies/List.vue'
+import MovieDetail from '@pages/movies/Detail.vue'
+import MovieFavorite from '@pages/movies/Favorite.vue'
 
 Vue.use(Router)
 
@@ -8,13 +11,13 @@ export const createRouter = (app, i18n) => {
   let routes = [
     {
       path: '/',
-      redirect: '/movies',
+      redirect: '/',
       component: Container,
       children: [
         {
-          path: '/movies',
+          path: '/',
           name: 'movies-list',
-          component: () => import('@pages/movies/List.vue'),
+          component: MovieList,
           meta: {
             label: i18n.t('menu.movies'),
           }
@@ -23,7 +26,7 @@ export const createRouter = (app, i18n) => {
           path: '/movies/:imdbID/detail',
           name: 'movies-detail',
           props: true,
-          component: () => import('@pages/movies/Detail.vue'),
+          component: MovieDetail,
           meta: {
             label: i18n.t('menu.movies'),
           }
@@ -31,7 +34,7 @@ export const createRouter = (app, i18n) => {
         {
           path: '/movies/favorite',
           name: 'movies-favorite',
-          component: () => import('@pages/movies/Favorite.vue'),
+          component: () => MovieFavorite,
           meta: {
             label: i18n.t('menu.favorite_movies'),
           }
@@ -53,7 +56,14 @@ export const createRouter = (app, i18n) => {
       ? `${to.meta.label} | ${Vue.prototype.$app.appname}`
       : Vue.prototype.$app.appname
 
-    next()
+    if (to.path == '/movies') {
+      next({ name: 'movies-list' })
+    } else {
+      next()
+
+    }
+    // console.log(to, from);
+
   })
   return router
 }

@@ -23,6 +23,15 @@ Vue.prototype.$app.route = window.route
 
 Vue.prototype.$app.alert = window.swal
 
+// const i18n = createLocales(window.settings.locale)
+// const router = createRouter(Vue.prototype.$app, i18n)
+
+// const app = new Vue({
+//   el: '#app',
+//   i18n,
+//   router
+// });
+
 export const createApp = () => {
   const i18n = createLocales(window.settings.locale)
   Vue.prototype.$app = window.settings
